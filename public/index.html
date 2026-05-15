@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Agent Builder</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2><i class="fas fa-robot"></i> AI Agent</h2>
+                <button class="new-chat-btn" id="newChatBtn">
+                    <i class="fas fa-plus"></i> New Chat
+                </button>
+            </div>
+            
+            <div class="chat-history" id="chatHistory">
+                <!-- Chat history items will be inserted here -->
+            </div>
+            
+            <div class="sidebar-footer">
+                <button class="nav-btn" id="architectureBtn">
+                    <i class="fas fa-diagram-project"></i> Architecture
+                </button>
+                <button class="nav-btn" id="pipelineBtn" style="margin-top: 10px;">
+                    <i class="fas fa-route"></i> Pipeline Flow
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Chat View -->
+            <div class="chat-view" id="chatView">
+                <div class="chat-header">
+                    <button class="toggle-sidebar" id="toggleSidebar">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1 id="chatTitle">AI Agent Builder</h1>
+                </div>
+                
+                <div class="messages-container" id="messagesContainer">
+                    <div class="welcome-message">
+                        <i class="fas fa-robot"></i>
+                        <h2>Welcome to AI Agent Builder</h2>
+                        <p>I can help you build frontend projects using terminal commands.</p>
+                        <p>Ask me anything to get started!</p>
+                    </div>
+                </div>
+                
+                <div class="input-container">
+                    <textarea 
+                        id="messageInput" 
+                        placeholder="Ask me to build something..."
+                        rows="1"
+                    ></textarea>
+                    <button id="sendBtn" class="send-btn">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Architecture View -->
+            <div class="architecture-view hidden" id="architectureView">
+                <div class="chat-header">
+                    <button class="toggle-sidebar" id="toggleSidebar2">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1>System Architecture</h1>
+                    <button class="back-btn" id="backToChat">
+                        <i class="fas fa-comments"></i> Back to Chat
+                    </button>
+                </div>
+                
+                <div class="architecture-content">
+                    <div class="arch-section">
+                        <h2><i class="fas fa-layer-group"></i> AI Agent Flow Architecture</h2>
+                        <div class="flow-diagram">
+                            <div class="flow-step">
+                                <div class="step-icon user-icon">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <h3>User Input</h3>
+                                <p>User sends a request through the frontend interface</p>
+                            </div>
+                            
+                            <div class="flow-arrow">
+                                <i class="fas fa-arrow-down"></i>
+                            </div>
+                            
+                            <div class="flow-step">
+                                <div class="step-icon frontend-icon">
+                                    <i class="fas fa-desktop"></i>
+                                </div>
+                                <h3>Frontend (React/HTML)</h3>
+                                <p>Captures input and sends to Express backend via REST API</p>
+                            </div>
+                            
+                            <div class="flow-arrow">
+                                <i class="fas fa-arrow-down"></i>
+                            </div>
+                            
+                            <div class="flow-step">
+                                <div class="step-icon backend-icon">
+                                    <i class="fas fa-server"></i>
+                                </div>
+                                <h3>Backend (Express.js)</h3>
+                                <p>Manages sessions, routes requests to AI agent</p>
+                            </div>
+                            
+                            <div class="flow-arrow">
+                                <i class="fas fa-arrow-down"></i>
+                            </div>
+                            
+                            <div class="flow-step">
+                                <div class="step-icon ai-icon">
+                                    <i class="fas fa-brain"></i>
+                                </div>
+                                <h3>AI Agent (Groq LLM)</h3>
+                                <p>Processes request, decides if tools are needed</p>
+                            </div>
+                            
+                            <div class="flow-split">
+                                <div class="flow-branch">
+                                    <div class="flow-arrow">
+                                        <i class="fas fa-arrow-down"></i>
+                                    </div>
+                                    <div class="flow-step">
+                                        <div class="step-icon tool-icon">
+                                            <i class="fas fa-terminal"></i>
+                                        </div>
+                                        <h3>Tool Execution</h3>
+                                        <p>Executes terminal commands if needed</p>
+                                    </div>
+                                    <div class="flow-arrow">
+                                        <i class="fas fa-arrow-up"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="flow-step">
+                                <div class="step-icon response-icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <h3>Final Response</h3>
+                                <p>AI generates final answer and sends back to user</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="arch-section">
+                        <h2><i class="fas fa-code"></i> Technology Stack</h2>
+                        <div class="tech-grid">
+                            <div class="tech-card">
+                                <i class="fas fa-desktop"></i>
+                                <h4>Frontend</h4>
+                                <ul>
+                                    <li>HTML5 / CSS3</li>
+                                    <li>Vanilla JavaScript</li>
+                                    <li>REST API Integration</li>
+                                </ul>
+                            </div>
+                            <div class="tech-card">
+                                <i class="fas fa-server"></i>
+                                <h4>Backend</h4>
+                                <ul>
+                                    <li>Node.js</li>
+                                    <li>Express.js</li>
+                                    <li>CORS enabled</li>
+                                </ul>
+                            </div>
+                            <div class="tech-card">
+                                <i class="fas fa-brain"></i>
+                                <h4>AI/ML</h4>
+                                <ul>
+                                    <li>Groq SDK</li>
+                                    <li>LLaMA 3.3 70B</li>
+                                    <li>Function Calling</li>
+                                </ul>
+                            </div>
+                            <div class="tech-card">
+                                <i class="fas fa-tools"></i>
+                                <h4>Tools</h4>
+                                <ul>
+                                    <li>Terminal Execution</li>
+                                    <li>Command Validation</li>
+                                    <li>Error Handling</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

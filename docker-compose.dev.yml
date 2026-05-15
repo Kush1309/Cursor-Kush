@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  ai-agent-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    image: ai-agent-builder:dev
+    container_name: ai-agent-builder-dev
+    restart: unless-stopped
+    
+    # Environment variables
+    environment:
+      - NODE_ENV=development
+      - PORT=3001
+      - GROQ_API_KEY=${GROQ_API_KEY}
+    
+    # Port mapping
+    ports:
+      - "3001:3001"
+    
+    # Mount source code for hot reload
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - ./logs:/app/logs
+    
+    # Command with nodemon for hot reload
+    command: npx nodemon server.js
+    
+    # Networks
+    networks:
+      - ai-agent-network
+
+# Networks
+networks:
+  ai-agent-network:
+    driver: bridge

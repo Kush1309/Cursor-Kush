@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Agent Pipeline - Architecture Visualization</title>
+    <link rel="stylesheet" href="pipeline.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="pipeline-container">
+        <!-- Header -->
+        <header class="pipeline-header">
+            <button class="back-btn" onclick="window.location.href='index.html'">
+                <i class="fas fa-arrow-left"></i> Back to Chat
+            </button>
+            <h1><i class="fas fa-diagram-project"></i> AI Agent Pipeline Architecture</h1>
+            <button class="toggle-animation" id="toggleAnimation">
+                <i class="fas fa-pause"></i> Pause
+            </button>
+        </header>
+
+        <!-- Pipeline Visualization -->
+        <div class="pipeline-content">
+            
+            <!-- Stage 1: User Input -->
+            <div class="pipeline-stage" data-stage="1">
+                <div class="stage-icon user-stage">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="stage-content">
+                    <h2>1. User Input</h2>
+                    <p>User types a message in the chat interface</p>
+                    <div class="stage-details">
+                        <span class="detail-badge">Frontend</span>
+                        <span class="detail-badge">HTML/CSS/JS</span>
+                    </div>
+                </div>
+                <div class="data-packet" data-from="1"></div>
+            </div>
+
+            <div class="pipeline-arrow">
+                <i class="fas fa-arrow-down"></i>
+                <span class="arrow-label">HTTP POST</span>
+            </div>
+
+            <!-- Stage 2: Frontend Processing -->
+            <div class="pipeline-stage" data-stage="2">
+                <div class="stage-icon frontend-stage">
+                    <i class="fas fa-desktop"></i>
+                </div>
+                <div class="stage-content">
+                    <h2>2. Frontend Processing</h2>
+                    <p>Capture input, validate, and send to backend</p>
+                    <div class="stage-details">
+                        <span class="detail-badge">app.js</span>
+                        <span class="detail-badge">Fetch API</span>
+                    </div>
+                    <div class="code-preview">
+                        <code>POST /api/sessions/:id/chat</code>
+                    </div>
+                </div>
+                <div class="data-packet" data-from="2"></div>
+            </div>
+
+            <div class="pipeline-arrow">
+                <i class="fas fa-arrow-down"></i>
+                <span class="arrow-label">REST API</span>
+            </div>
+
+            <!-- Stage 3: Express Server -->
+            <div class="pipeline-stage" data-stage="3">
+                <div class="stage-icon backend-stage">
+                    <i class="fas fa-server"></i>
+                </div>
+                <div class="stage-content">
+                    <h2>3. Express Server</h2>
+                    <p>Route handling, session management, SSE setup</p>
+                    <div class="stage-details">
+                        <span class="detail-badge">Node.js</span>
+                        <span class="detail-badge">Express.js</span>
+                    </div>
+                    <div class="code-preview">
+                        <code>app.post('/api/sessions/:id/chat')</code>
+                    </div>
+                </div>
+                <div class="data-packet" data-from="3"></div>
+            </div>
+
+            <div class="pipeline-arrow">
+                <i class="fas fa-arrow-down"></i>
+                <span class="arrow-label">Function Call</span>
+            </div>
+
+            <!-- Stage 4: AI Agent -->
+            <div class="pipeline-stage" data-stage="4">
+                <div class="stage-icon ai-stage">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <div class="stage-content">
+                    <h2>4. AI Agent Engine</h2>
+                    <p>Process request, manage context, prepare for AI</p>
+                    <div class="stage-details">
+                        <span class="detail-badge">Agent Logic</span>
+                        <span class="detail-badge">Context Mgmt</span>
+                    </div>
+                    <div class="code-preview">
+                        <code>runAgentStreaming(history, message)</code>
+                    </div>
+                </div>
+                <div class="data-packet" data-from="4"></div>
+            </div>
+
+            <div class="pipeline-arrow">
+                <i class="fas fa-arrow-down"></i>
+                <span class="arrow-label">Streaming API</span>
+            </div>
+
+            <!-- Stage 5: Groq API -->
+            <div class="pipeline-stage" data-stage="5">
+                <div class="stage-icon groq-stage">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="stage-content">
+                    <h2>5. Groq LLM Processing</h2>
+                    <p>LLaMA 3.3 70B generates streaming response</p>
+                    <div class="stage-details">
+                        <span class="detail-badge">Groq SDK</span>
+                        <span class="detail-badge">LLaMA 3.3 70B</span>
+                    </div>
+                    <div class="code-preview">
+                        <code>groq.chat.completions.create({stream: true})</code>
+                    </div>
+                </div>
+                <div class="data-packet" data-from="5"></div>
+            </div>
+
+            <!-- Split for Tool Execution -->
+            <div class="pipeline-split">
+                <div class="split-arrow left">
+                    <i class="fas fa-arrow-down-long"></i>
+                    <span class="arrow-label">If tools needed</span>
+                </div>
+                <div class="split-arrow right">
+                    <i class="fas fa-arrow-down-long"></i>
+                    <span class="arrow-label">Direct response</span>
+                </div>
+            </div>
+
+            <!-- Stage 6: Tool Execution (Optional) -->
+            <div class="pipeline-stage optional" data-stage="6">
+                <div class="stage-icon tool-stage">
+                    <i class="fas fa-terminal"></i>
+                </div>
+                <div class="stage-content">
+                    <h2>6. Tool Execution (Optional)</h2>
+                    <p>Execute terminal commands if requested by AI</p>
+                    <div class="stage-details">
+                        <span class="detail-badge">child_process</span>
+                        <span class="detail-badge">Command Exec</span>
+                    </div>
+                    <div class="code-preview">
+                        <code>executeCommand({command: "..."})</code>
+                    </div>
+                </div>
+                <div class="data-packet" data-from="6"></div>
+            </div>
+
+            <div class="pipeline-arrow">
+                <i class="fas fa-arrow-up"></i>
+                <span class="arrow-label">Tool Results</span>
+            </div>
+
+            <!-- Stage 7: Response Streaming -->
+            <div class="pipeline-stage" data-stage="7">
+                <div class="stage-icon stream-stage">
+                    <i class="fas fa-stream"></i>
+                </div>
+                <div class="stage-content">
+                    <h2>7. Response Streaming</h2>
+                    <p>Stream chunks back to client via SSE</p>
+                    <div class="stage-details">
+                        <span class="detail-badge">SSE</span>
+                        <span class="detail-badge">Real-time</span>
+                    </div>
+                    <div class="code-preview">
+                        <code>res.write(`data: ${JSON.stringify(chunk)}\n\n`)</code>
+                    </div>
+                </div>
+                <div class="data-packet" data-from="7"></div>
+            </div>
+
+            <div class="pipeline-arrow">
+                <i class="fas fa-arrow-up"></i>
+                <span class="arrow-label">SSE Stream</span>
+            </div>
+
+            <!-- Stage 8: Frontend Display -->
+            <div class="pipeline-stage" data-stage="8">
+                <div class="stage-icon display-stage">
+                    <i class="fas fa-display"></i>
+                </div>
+                <div class="stage-content">
+                    <h2>8. Real-time Display</h2>
+                    <p>Update UI with streaming text and code blocks</p>
+                    <div class="stage-details">
+                        <span class="detail-badge">EventSource</span>
+                        <span class="detail-badge">DOM Update</span>
+                    </div>
+                    <div class="code-preview">
+                        <code>messageTextDiv.innerHTML = formatMessageText(fullText)</code>
+                    </div>
+                </div>
+                <div class="data-packet" data-from="8"></div>
+            </div>
+
+            <div class="pipeline-arrow final">
+                <i class="fas fa-check-circle"></i>
+                <span class="arrow-label">Complete!</span>
+            </div>
+
+            <!-- Final Stage: User Sees Result -->
+            <div class="pipeline-stage final-stage" data-stage="9">
+                <div class="stage-icon success-stage">
+                    <i class="fas fa-check-double"></i>
+                </div>
+                <div class="stage-content">
+                    <h2>9. User Sees Result</h2>
+                    <p>Streaming response displayed in real-time</p>
+                    <div class="stage-details">
+                        <span class="detail-badge">Complete</span>
+                        <span class="detail-badge">Success</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Stats Panel -->
+        <div class="stats-panel">
+            <div class="stat-card">
+                <i class="fas fa-clock"></i>
+                <div class="stat-value" id="totalTime">~2-5s</div>
+                <div class="stat-label">Total Time</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-layer-group"></i>
+                <div class="stat-value">9</div>
+                <div class="stat-label">Pipeline Stages</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-bolt"></i>
+                <div class="stat-value">Real-time</div>
+                <div class="stat-label">Streaming</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-shield-alt"></i>
+                <div class="stat-value">5 Layers</div>
+                <div class="stat-label">Security</div>
+            </div>
+        </div>
+
+        <!-- Legend -->
+        <div class="legend">
+            <h3><i class="fas fa-info-circle"></i> Pipeline Legend</h3>
+            <div class="legend-items">
+                <div class="legend-item">
+                    <div class="legend-icon user-stage"><i class="fas fa-user"></i></div>
+                    <span>User Interaction</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-icon frontend-stage"><i class="fas fa-desktop"></i></div>
+                    <span>Frontend Layer</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-icon backend-stage"><i class="fas fa-server"></i></div>
+                    <span>Backend Layer</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-icon ai-stage"><i class="fas fa-brain"></i></div>
+                    <span>AI Processing</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-icon tool-stage"><i class="fas fa-terminal"></i></div>
+                    <span>Tool Execution</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-icon stream-stage"><i class="fas fa-stream"></i></div>
+                    <span>Streaming</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="pipeline.js"></script>
+</body>
+</html>
