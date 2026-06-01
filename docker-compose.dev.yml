@@ -14,6 +14,7 @@ services:
       - NODE_ENV=development
       - PORT=3001
       - GROQ_API_KEY=${GROQ_API_KEY}
+      - EXECUTOR_URL=http://executor:4000/execute
     
     # Port mapping
     ports:
@@ -29,6 +30,22 @@ services:
     command: npx nodemon server.js
     
     # Networks
+    networks:
+      - ai-agent-network
+
+  executor:
+    build:
+      context: ./executor
+      dockerfile: Dockerfile
+    image: executor:dev
+    container_name: executor-dev
+    restart: unless-stopped
+    environment:
+      - PORT=4000
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./executor:/app
     networks:
       - ai-agent-network
 

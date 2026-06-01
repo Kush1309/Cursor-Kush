@@ -22,11 +22,24 @@ const sessions = {};
 
 // ---------------- TOOL ----------------
 async function executeCommand({ command }) {
+  const url = process.env.EXECUTOR_URL || 'http://executor:4000/execute';
   try {
-    const { stdout, stderr } = await asyncExecute(command);
-    return `Success:\n${stdout}\nLogs/Warnings:\n${stderr}`;
-  } catch (error) {
-    return `Error: ${error.message}`;
+    let fetchFn = global.fetch;
+    if (!fetchFn) {
+      const nodeFetch = await import('node-fetch');
+      fetchFn = nodeFetch.default;
+    }
+
+    const resp = await fetchFn(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ command }),
+    });
+
+    const data = await resp.json();
+    return data.result ?? (data.success === false ? data.result : JSON.stringify(data));
+  } catch (err) {
+    return `Error: ${err.message}`;
   }
 }
 

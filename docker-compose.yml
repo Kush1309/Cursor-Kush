@@ -16,6 +16,7 @@ services:
       - NODE_ENV=production
       - PORT=3001
       - GROQ_API_KEY=${GROQ_API_KEY}
+      - EXECUTOR_URL=http://executor:4000/execute
     
     # Port mapping
     ports:
@@ -55,6 +56,20 @@ services:
     networks:
       - ai-agent-network
 
+  executor:
+    build:
+      context: ./executor
+      dockerfile: Dockerfile
+    image: executor:latest
+    container_name: executor
+    restart: unless-stopped
+    environment:
+      - PORT=4000
+    ports:
+      - "4000:4000"
+    networks:
+      - ai-agent-network
+
 # Named volumes
 volumes:
   ai-agent-data:
@@ -64,3 +79,8 @@ volumes:
 networks:
   ai-agent-network:
     driver: bridge
+
+  # Executor service
+  executor-network:
+    driver: bridge
+
